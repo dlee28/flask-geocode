@@ -95,6 +95,8 @@ function getWeatherDataIp(timesteps) {
         request('/api/search/ip/' + timesteps, 'GET', createWeatherTableCard);
     } else if (timesteps === 'current') {
         request('/api/search/ip/' + timesteps, 'GET', createCurrentWeatherCard);
+    } else if (timesteps === '1h') {
+        request('/api/search/ip/' + timesteps, 'GET', createHourlyDataVis);
     }
     console.log('getWeatherDataIp finished...')
 }
