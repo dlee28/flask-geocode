@@ -60,6 +60,7 @@ function search() {
     displayFutureDiv(false);
     displayDetailDiv(false);
     displayArrowDiv(false);
+    displayErrorMessage(false);
     console.log(street, city, state);
     if (searchByIp) {
         console.log('searching by ip...');
@@ -114,13 +115,14 @@ function request(url, reqType, writeFunc) {
     xmlReq.open(reqType, url, true);
     xmlReq.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 404) {
-            displayErrorMessage('Error: got a 404');
+            displayErrorMessage(true);
+        }
+        if (this.readyState === 4 && this.status === 500) {
+            displayErrorMessage(true);
         }
         if (this.readyState === 4 && this.status === 200) {
             writeFunc(JSON.parse(this.responseText));
             // createWeatherTableCard(JSON.parse(this.responseText));
-        } else {
-            displayErrorMessage(true);
         }
     };
     xmlReq.send();
